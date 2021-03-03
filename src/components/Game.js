@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { loadGameDetails } from '../redux/actions/gameActions';
@@ -7,7 +7,7 @@ import { loadGameDetails } from '../redux/actions/gameActions';
 const Game = ({ name, released, id, image }) => {
   const dispatch = useDispatch();
 
-  const { game } = useSelector((state) => state.game, shallowEqual);
+ // const { game } = useSelector((state) => state.game, shallowEqual);
 
   const loadGameDetailsHandler = () => {
     dispatch(loadGameDetails(id));

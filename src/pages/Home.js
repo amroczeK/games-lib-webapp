@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { loadGames } from '../redux/actions/gamesActions';
 import Game from '../components/Game';
+import GameDetails from '../components/GameDetails';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const Home = () => {
   const dispatch = useDispatch();
   const { popular, upcoming, newGames } = useSelector((state) => state.games, shallowEqual);
+  const { details } = useSelector((state) => state.game);
 
   useEffect(() => {
     dispatch(loadGames());
@@ -15,6 +17,7 @@ const Home = () => {
 
   return (
     <GameList>
+      {details.name && <GameDetails />}
       <h2>Upcoming Games</h2>
       <Games>
         {upcoming &&

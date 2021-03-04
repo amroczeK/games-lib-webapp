@@ -14,31 +14,31 @@ const GameDetails = () => {
     <CardShadow>
       {/* {screenshots && name && rating && platforms && background_image && ( */}
       <Details>
-        <div className='stats'>
+        <Stats>
           <div className='rating'>
             <h3>{name}</h3>
             <p>Rating: {rating}</p>
           </div>
-          <div className='info'>
-            <h3>Platforms</h3>
-            <div className='platforms'>
+          <Info>
+            <h4>Platforms</h4>
+            <Platforms className='platforms'>
               {platforms?.map((data) => (
-                <h3 key={data.platform.id}>{data.platform.name}</h3>
+                <h5 key={data.platform.id}>{data.platform.name}</h5>
               ))}
-            </div>
-          </div>
-        </div>
-        <div className='media'>
+            </Platforms>
+          </Info>
+        </Stats>
+        <Media>
           <img src={background_image} alt='game-bg-img' />
-        </div>
-        <div className='description'>
+        </Media>
+        <Description>
           <p>{description_raw}</p>
-        </div>
-        <div className='gallery'>
+        </Description>
+        <Gallery>
           {screenshots?.map((screenshot) => (
             <img src={screenshot.image} key={screenshot.id} alt='game' />
           ))}
-        </div>
+        </Gallery>
       </Details>
       {/* )} */}
     </CardShadow>
@@ -65,9 +65,10 @@ const CardShadow = styled(motion.div)`
 `;
 
 const Details = styled(motion.div)`
+  margin-top: 5rem;
   width: 80%;
   border-radius: 1rem;
-  padding: 2rem 20rem;
+  padding: 2rem 4rem;
   background: white;
   position: absolute;
   left: 10%;
@@ -75,6 +76,48 @@ const Details = styled(motion.div)`
   img {
     width: 100%;
   }
+`;
+
+const Stats = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Info = styled(motion.div)`
+  text-align: center;
+`;
+
+const Platforms = styled(motion.div)`
+  display: flex;
+  justify-content: space-evenly;
+  img {
+    margin-left: 3rem;
+  }
+`;
+
+const Media = styled(motion.div)`
+  margin-top: 2rem;
+  img {
+    width: 100%;
+    // Remove lines below for full image
+    //height: 60vh; // fixed height for all images
+    //object-fit: cover; // stops the stretching of image due to height
+  }
+`;
+
+const Gallery = styled(motion.div)`
+  img {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    // Remove lines below for full image
+    //height: 60vh; // fixed height for all images
+    //object-fit: cover; // stops the stretching of image due to height
+  }
+`;
+
+const Description = styled(motion.div)`
+  margin: 3rem 0rem;
 `;
 
 export default GameDetails;

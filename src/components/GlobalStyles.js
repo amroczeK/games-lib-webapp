@@ -26,9 +26,20 @@ const GlobalStyles = createGlobalStyle`
       font-weight: lighter
     }
     h3 {
+      font-size: 1.75rem;
+      color: #333;
+      padding: 1.5rem 0rem; // 1.5rem top & bottom, 0rem left & right
+    }
+    h4 {
       font-size: 1.3rem;
       color: #333;
-      padding: 1.5rem;
+      padding: 1.5rem 0rem; // 1.5rem top & bottom, 0rem left & right
+    }
+    h5 {
+      font-size: 1.2rem;
+      font-weight: lighter;
+      color: #696969;
+      padding: 0rem 0.5rem; // 1.5rem top & bottom, 0rem left & right
     }
     p {
       font-size: 1.2rem;

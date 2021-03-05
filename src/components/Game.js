@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { loadGameDetails } from "../redux/actions/gameActions";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import {resizeImage} from '../utils'
 
 const Game = ({ name, released, id, image }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const Game = ({ name, released, id, image }) => {
       <Link to={`/game/${id}`}>
         <h3>{name}</h3>
         <p>{released}</p>
-        <img src={image} alt={name} />
+        <img src={resizeImage(image, 640)} alt={name} />
       </Link>
     </StyledGame>
   );

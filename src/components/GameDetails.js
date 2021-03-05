@@ -1,39 +1,42 @@
-import React from "react";
-import { useSelector, shallowEqual } from "react-redux";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import React from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { resizeImage } from '../utils';
 
 const GameDetails = () => {
   const history = useHistory();
   const { isLoading } = useSelector((state) => state.game, shallowEqual);
-  const { name, rating, platforms, background_image, description_raw } = useSelector((state) => state.game.details, shallowEqual);
+  const { name, rating, platforms, background_image, description_raw } = useSelector(
+    (state) => state.game.details,
+    shallowEqual
+  );
   const screenshots = useSelector((state) => state.game.screenshots);
 
   const closeGameDetailsHandler = (e) => {
     const element = e.target;
-    if (element.classList.contains("shadow")) {
-      document.body.style.overflow = "auto";
-      history.push("/");
+    if (element.classList.contains('shadow')) {
+      document.body.style.overflow = 'auto';
+      history.push('/');
     }
   };
 
   return (
     <>
       {!isLoading ? (
-        <CardShadow className="shadow" onClick={closeGameDetailsHandler}>
-          {/* {screenshots && name && rating && platforms && background_image && ( */}
+        <CardShadow className='shadow' onClick={closeGameDetailsHandler}>
           <Details>
             <DetailsContainer>
               <Stats>
-                <div className="rating">
+                <div className='rating'>
                   <h3>{name}</h3>
                   <p>Rating: {rating}</p>
                 </div>
                 <Info>
                   <h4>Platforms</h4>
-                  <Platforms className="platforms">
+                  <Platforms className='platforms'>
                     {platforms?.map((data) => (
                       <h5 key={data.platform.id}>{data.platform.name}</h5>
                     ))}
@@ -41,25 +44,24 @@ const GameDetails = () => {
                 </Info>
               </Stats>
               <Media>
-                <img src={background_image} alt="game-bg-img" />
+                <img src={resizeImage(background_image, 1280)} alt='game-bg-img' />
               </Media>
               <Description>
                 <p>{description_raw}</p>
               </Description>
               <Gallery>
                 {screenshots?.map((screenshot) => (
-                  <img src={screenshot.image} key={screenshot.id} alt="game" />
+                  <img src={resizeImage(screenshot.image, 1280)} key={screenshot.id} alt='game' />
                 ))}
               </Gallery>
             </DetailsContainer>
           </Details>
-          {/* )} */}
         </CardShadow>
       ) : (
-        <CardShadow className="shadow">
+        <CardShadow className='shadow'>
           <Details>
             <DetailsContainer>
-              <LinearProgress color="secondary" />
+              <LinearProgress color='secondary' />
             </DetailsContainer>
           </Details>
         </CardShadow>

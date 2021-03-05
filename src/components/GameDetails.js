@@ -25,38 +25,42 @@ const GameDetails = () => {
         <CardShadow className="shadow" onClick={closeGameDetailsHandler}>
           {/* {screenshots && name && rating && platforms && background_image && ( */}
           <Details>
-            <Stats>
-              <div className="rating">
-                <h3>{name}</h3>
-                <p>Rating: {rating}</p>
-              </div>
-              <Info>
-                <h4>Platforms</h4>
-                <Platforms className="platforms">
-                  {platforms?.map((data) => (
-                    <h5 key={data.platform.id}>{data.platform.name}</h5>
-                  ))}
-                </Platforms>
-              </Info>
-            </Stats>
-            <Media>
-              <img src={background_image} alt="game-bg-img" />
-            </Media>
-            <Description>
-              <p>{description_raw}</p>
-            </Description>
-            <Gallery>
-              {screenshots?.map((screenshot) => (
-                <img src={screenshot.image} key={screenshot.id} alt="game" />
-              ))}
-            </Gallery>
+            <DetailsContainer>
+              <Stats>
+                <div className="rating">
+                  <h3>{name}</h3>
+                  <p>Rating: {rating}</p>
+                </div>
+                <Info>
+                  <h4>Platforms</h4>
+                  <Platforms className="platforms">
+                    {platforms?.map((data) => (
+                      <h5 key={data.platform.id}>{data.platform.name}</h5>
+                    ))}
+                  </Platforms>
+                </Info>
+              </Stats>
+              <Media>
+                <img src={background_image} alt="game-bg-img" />
+              </Media>
+              <Description>
+                <p>{description_raw}</p>
+              </Description>
+              <Gallery>
+                {screenshots?.map((screenshot) => (
+                  <img src={screenshot.image} key={screenshot.id} alt="game" />
+                ))}
+              </Gallery>
+            </DetailsContainer>
           </Details>
           {/* )} */}
         </CardShadow>
       ) : (
         <CardShadow className="shadow">
           <Details>
-            <LinearProgress color="secondary" />
+            <DetailsContainer>
+              <LinearProgress color="secondary" />
+            </DetailsContainer>
           </Details>
         </CardShadow>
       )}
@@ -71,6 +75,33 @@ const CardShadow = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
+`;
+
+const Details = styled(motion.div)`
+  top: 3rem;
+  bottom: 3rem;
+  width: 80%;
+  border-radius: 1rem;
+  background: white;
+  position: fixed;
+  left: 10%;
+  color: black;
+  overflow: hidden; // Hide the scroll bar corners
+  img {
+    width: 100%;
+  }
+`;
+
+/**
+ * This container puts the scroll bar into the modal
+ */
+const DetailsContainer = styled(motion.div)`
+  position: absolute;
+  padding: 2rem 4rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 0.5rem;
@@ -80,20 +111,6 @@ const CardShadow = styled(motion.div)`
   }
   &::-webkit-scrollbar-track {
     background: white;
-  }
-`;
-
-const Details = styled(motion.div)`
-  margin-top: 5rem;
-  width: 80%;
-  border-radius: 1rem;
-  padding: 2rem 4rem;
-  background: white;
-  position: absolute;
-  left: 10%;
-  color: black;
-  img {
-    width: 100%;
   }
 `;
 

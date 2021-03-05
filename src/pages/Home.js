@@ -34,9 +34,7 @@ const Home = () => {
       ) : (
         <Games>
           {dummyGameCards.map(() => (
-            //<Game>
             <LinearProgress color="secondary" />
-            //</Game>
           ))}
         </Games>
       )}

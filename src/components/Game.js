@@ -1,12 +1,15 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { loadGameDetails } from "../redux/actions/gameActions";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const Game = ({ name, released, id, image }) => {
   const dispatch = useDispatch();
+
+  const { isLoading: gamesLoading } = useSelector((state) => state.game, shallowEqual);
 
   const loadGameDetailsHandler = () => {
     // Hide the main scrollbar when we open modal

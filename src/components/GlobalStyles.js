@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   *{
@@ -49,6 +49,9 @@ const GlobalStyles = createGlobalStyle`
     a {
       text-decoration: none;
       color: #333;
+    }
+    img {
+      display: block; // Stretches img to corners of modal
     }
   }
 `;

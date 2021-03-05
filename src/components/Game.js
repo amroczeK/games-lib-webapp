@@ -8,9 +8,9 @@ import { loadGameDetails } from "../redux/actions/gameActions";
 const Game = ({ name, released, id, image }) => {
   const dispatch = useDispatch();
 
-  // const { game } = useSelector((state) => state.game, shallowEqual);
-
   const loadGameDetailsHandler = () => {
+    // Hide the main scrollbar when we open modal
+    document.body.style.overflow = "hidden";
     dispatch(loadGameDetails(id));
   };
 
@@ -31,10 +31,13 @@ const StyledGame = styled(motion.div)`
   text-align: center;
   border-radius: 1rem;
   cursor: pointer;
+  overflow: hidden; // hides images overflowing over modal borders
   img {
     width: 100%;
     height: 40vh;
     object-fit: cover;
+    //padding-top: 1.5rem;
+    //padding-bottom: 2rem;
   }
 `;
 

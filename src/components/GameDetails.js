@@ -1,58 +1,77 @@
-import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import React from "react";
+import { useSelector, shallowEqual } from "react-redux";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const GameDetails = () => {
-  const { name, rating, platforms, background_image, description_raw } = useSelector(
-    (state) => state.game.details,
-    shallowEqual
-  );
+  const history = useHistory();
+  const { isLoading } = useSelector((state) => state.game, shallowEqual);
+  const { name, rating, platforms, background_image, description_raw } = useSelector((state) => state.game.details, shallowEqual);
   const screenshots = useSelector((state) => state.game.screenshots);
 
+  const closeGameDetailsHandler = (e) => {
+    const element = e.target;
+    if (element.classList.contains("shadow")) {
+      document.body.style.overflow = "auto";
+      history.push("/");
+    }
+  };
+
   return (
-    <CardShadow>
-      {/* {screenshots && name && rating && platforms && background_image && ( */}
-      <Details>
-        <Stats>
-          <div className='rating'>
-            <h3>{name}</h3>
-            <p>Rating: {rating}</p>
-          </div>
-          <Info>
-            <h4>Platforms</h4>
-            <Platforms className='platforms'>
-              {platforms?.map((data) => (
-                <h5 key={data.platform.id}>{data.platform.name}</h5>
+    <>
+      {!isLoading ? (
+        <CardShadow className="shadow" onClick={closeGameDetailsHandler}>
+          {/* {screenshots && name && rating && platforms && background_image && ( */}
+          <Details>
+            <Stats>
+              <div className="rating">
+                <h3>{name}</h3>
+                <p>Rating: {rating}</p>
+              </div>
+              <Info>
+                <h4>Platforms</h4>
+                <Platforms className="platforms">
+                  {platforms?.map((data) => (
+                    <h5 key={data.platform.id}>{data.platform.name}</h5>
+                  ))}
+                </Platforms>
+              </Info>
+            </Stats>
+            <Media>
+              <img src={background_image} alt="game-bg-img" />
+            </Media>
+            <Description>
+              <p>{description_raw}</p>
+            </Description>
+            <Gallery>
+              {screenshots?.map((screenshot) => (
+                <img src={screenshot.image} key={screenshot.id} alt="game" />
               ))}
-            </Platforms>
-          </Info>
-        </Stats>
-        <Media>
-          <img src={background_image} alt='game-bg-img' />
-        </Media>
-        <Description>
-          <p>{description_raw}</p>
-        </Description>
-        <Gallery>
-          {screenshots?.map((screenshot) => (
-            <img src={screenshot.image} key={screenshot.id} alt='game' />
-          ))}
-        </Gallery>
-      </Details>
-      {/* )} */}
-    </CardShadow>
+            </Gallery>
+          </Details>
+          {/* )} */}
+        </CardShadow>
+      ) : (
+        <CardShadow className="shadow">
+          <Details>
+            <LinearProgress color="secondary" />
+          </Details>
+        </CardShadow>
+      )}
+    </>
   );
 };
 
 const CardShadow = styled(motion.div)`
   width: 100%;
   min-height: 100vh;
-  overflow-y: scroll;
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
+  overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 0.5rem;
   }

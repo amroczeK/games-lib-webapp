@@ -6,29 +6,64 @@ import Game from "../components/Game";
 import GameDetails from "../components/GameDetails";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { popular, upcoming, newGames } = useSelector((state) => state.games, shallowEqual);
+  const { popular, upcoming, newGames, isLoading: gamesLoading } = useSelector((state) => state.games, shallowEqual);
   const { details } = useSelector((state) => state.game);
-  console.log('details', details);
+  const dummyGameCards = [1, 2, 3, 4];
 
-  let {id} = useParams();
-  console.log(id)
+  let { id } = useParams();
 
   useEffect(() => {
     dispatch(loadGames());
   }, [dispatch]);
 
+  // Set homepage scroll bar to primary if modal not open
+  useEffect(() => {
+    id ? (document.body.style.overflow = "hidden") : (document.body.style.overflow = "auto");
+  }, [id]);
+
   return (
     <GameList>
       {id && details.id && <GameDetails />}
       <h2>Upcoming Games</h2>
-      <Games>{upcoming && upcoming.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
+      {!gamesLoading ? (
+        <Games>{upcoming && upcoming.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
+      ) : (
+        <Games>
+          {dummyGameCards.map(() => (
+            //<Game>
+            <LinearProgress color="secondary" />
+            //</Game>
+          ))}
+        </Games>
+      )}
       <h2>Popular Games</h2>
-      <Games>{popular && popular.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
+      {!gamesLoading ? (
+        <Games>{popular && popular.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
+      ) : (
+        <Games>
+          {dummyGameCards.map(() => (
+            //<Game>
+            <LinearProgress color="secondary" />
+            //</Game>
+          ))}
+        </Games>
+      )}
       <h2>New Games</h2>
-      <Games>{newGames && newGames.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
+      {!gamesLoading ? (
+        <Games>{newGames && newGames.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
+      ) : (
+        <Games>
+          {dummyGameCards.map(() => (
+            //<Game>
+            <LinearProgress color="secondary" />
+            //</Game>
+          ))}
+        </Games>
+      )}
     </GameList>
   );
 };

@@ -1,15 +1,20 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { loadGames } from '../redux/actions/gamesActions';
-import Game from '../components/Game';
-import GameDetails from '../components/GameDetails';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useParams } from "react-router-dom";
+import { loadGames } from "../redux/actions/gamesActions";
+import Game from "../components/Game";
+import GameDetails from "../components/GameDetails";
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { popular, upcoming, newGames } = useSelector((state) => state.games, shallowEqual);
   const { details } = useSelector((state) => state.game);
+  console.log('details', details);
+
+  let {id} = useParams();
+  console.log(id)
 
   useEffect(() => {
     dispatch(loadGames());
@@ -17,46 +22,13 @@ const Home = () => {
 
   return (
     <GameList>
-      {details.name && <GameDetails />}
+      {id && details.id && <GameDetails />}
       <h2>Upcoming Games</h2>
-      <Games>
-        {upcoming &&
-          upcoming.map((game) => (
-            <Game
-              key={game.id}
-              name={game.name}
-              released={game.released}
-              id={game.id}
-              image={game.background_image}
-            />
-          ))}
-      </Games>
+      <Games>{upcoming && upcoming.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
       <h2>Popular Games</h2>
-      <Games>
-        {popular &&
-          popular.map((game) => (
-            <Game
-              key={game.id}
-              name={game.name}
-              released={game.released}
-              id={game.id}
-              image={game.background_image}
-            />
-          ))}
-      </Games>
+      <Games>{popular && popular.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
       <h2>New Games</h2>
-      <Games>
-        {newGames &&
-          newGames.map((game) => (
-            <Game
-              key={game.id}
-              name={game.name}
-              released={game.released}
-              id={game.id}
-              image={game.background_image}
-            />
-          ))}
-      </Games>
+      <Games>{newGames && newGames.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
     </GameList>
   );
 };

@@ -1,9 +1,13 @@
 import axios from 'axios';
-import { GET_GAME_DETAILS } from '../types';
+import { GET_GAME_DETAILS, LOADING_GAME_DETAILS } from '../types';
 import { gameDetailsUrl, gameScreenshotsUrl } from '../../api';
 
 export const loadGameDetails = (id) => async (dispatch) => {
   try {
+    dispatch({
+      type: LOADING_GAME_DETAILS,
+    });
+
     const gameDetails = await axios.get(gameDetailsUrl(id));
     const gameScreenshots = await axios.get(gameScreenshotsUrl(id));
 

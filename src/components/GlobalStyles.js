@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
   *{
@@ -52,6 +52,10 @@ const GlobalStyles = createGlobalStyle`
     }
     img {
       display: block; // Stretches img to corners of modal
+    }
+    input {
+      font-weight: bold;
+      font-family: 'Monsterrat', sans-serif;
     }
   }
 `;

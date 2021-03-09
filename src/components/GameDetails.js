@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { resizeImage } from '../utils';
+import { resizeImage, getPlatforms, getStars } from '../utils';
 
 const GameDetails = ({ id }) => {
   const history = useHistory();
@@ -33,12 +33,17 @@ const GameDetails = ({ id }) => {
                 <div className='rating'>
                   <h3>{name}</h3>
                   <p>Rating: {rating}</p>
+                  {getStars(rating)}
                 </div>
                 <Info>
                   <h4>Platforms</h4>
                   <Platforms className='platforms'>
                     {platforms?.map((data) => (
-                      <h5 key={data.platform.id}>{data.platform.name}</h5>
+                      <img
+                        key={data.platform.id}
+                        src={getPlatforms(data.platform.name)}
+                        alt='platform'
+                      ></img>
                     ))}
                   </Platforms>
                 </Info>
@@ -121,10 +126,15 @@ const Stats = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  img {
+    display: inline;  // make images align as row/line
+    width: 1.45rem;
+    height: 1.45rem;
+  }
 `;
 
 const Info = styled(motion.div)`
-  text-align: center;
+  text-align: right;
 `;
 
 const Platforms = styled(motion.div)`

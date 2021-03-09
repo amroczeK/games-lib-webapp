@@ -1,19 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import logo from '../images/logo.svg';
+import { fetchSearch } from '../redux/actions/gamesActions';
 
 const Nav = () => {
+  const dispatch = useDispatch();
+  const [textInput, setTextInput] = useState('');
+
+  const inputHandler = (e) => {
+    setTextInput(e.target.value);
+  };
+
+  const submitSearch = (e) => {
+    e.preventDefault(); // Prevent form from refreshing the page
+    dispatch(fetchSearch(textInput));
+    setTextInput('');
+  };
+
+  const clearSearchedGames = () => {
+    dispatch({ type: 'CLEAR_SEARCHED_GAMES' });
+  };
+
   return (
     <StyledNav>
-      <Logo>
+      <Logo onClick={clearSearchedGames}>
         <img src={logo} alt='logo' />
         <h1>Ignite</h1>
       </Logo>
-      <div className='searach'>
-        <input type='text' />
-        <button>Search</button>
-      </div>
+      <form className='search'>
+        <input value={textInput} onChange={inputHandler} type='text' />
+        <button onClick={submitSearch} type='submit'>
+          Search
+        </button>
+      </form>
     </StyledNav>
   );
 };

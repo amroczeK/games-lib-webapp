@@ -29,3 +29,4 @@ export const newGamesUrl = () => `${BASE_URL}${NEW_GAMES}`;
 
 export const gameDetailsUrl = (game_id) => `${BASE_URL}games/${game_id}`;
 export const gameScreenshotsUrl = (game_id) => `${BASE_URL}games/${game_id}/screenshots`;
+export const searchGameUrl = (game_name) => `${BASE_URL}games?search=${game_name}&page_size=9`;

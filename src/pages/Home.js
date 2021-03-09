@@ -10,7 +10,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { popular, upcoming, newGames, isLoading: gamesLoading } = useSelector(
+  const { popular, upcoming, newGames, searched, searching, isLoading: gamesLoading } = useSelector(
     (state) => state.games,
     shallowEqual
   );
@@ -36,6 +36,21 @@ const Home = () => {
          * and make sure the component has a toggle
          */}
         <AnimatePresence>{id && details.id && <GameDetails id={Number(id)} />}</AnimatePresence>
+        {!searching && searched.length > 0 ? (
+          <Games>
+            {searched.map((game) => (
+              <Game
+                key={game.id}
+                name={game.name}
+                released={game.released}
+                id={game.id}
+                image={game.background_image}
+              />
+            ))}
+          </Games>
+        ) : (
+          <div />
+        )}
         <h2>Upcoming Games</h2>
         {!gamesLoading ? (
           <Games>

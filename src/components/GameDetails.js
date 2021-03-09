@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { resizeImage } from '../utils';
 
-const GameDetails = () => {
+const GameDetails = ({ id }) => {
   const history = useHistory();
   const { isLoading } = useSelector((state) => state.game, shallowEqual);
   const { name, rating, platforms, background_image, description_raw } = useSelector(
@@ -28,7 +28,7 @@ const GameDetails = () => {
       {!isLoading ? (
         <CardShadow className='shadow' onClick={closeGameDetailsHandler}>
           <Details>
-            <DetailsContainer>
+            <DetailsContainer layoutId={id}>
               <Stats>
                 <div className='rating'>
                   <h3>{name}</h3>
@@ -60,7 +60,7 @@ const GameDetails = () => {
       ) : (
         <CardShadow className='shadow'>
           <Details>
-            <DetailsContainer>
+            <DetailsContainer layoutId={id}>
               <LinearProgress color='secondary' />
             </DetailsContainer>
           </Details>
@@ -84,7 +84,7 @@ const Details = styled(motion.div)`
   bottom: 3rem;
   width: 80%;
   border-radius: 1rem;
-  background: white;
+  //background: white;
   position: fixed;
   left: 10%;
   color: black;
@@ -99,6 +99,7 @@ const Details = styled(motion.div)`
  */
 const DetailsContainer = styled(motion.div)`
   position: absolute;
+  background: white;
   padding: 2rem 4rem;
   top: 0;
   left: 0;

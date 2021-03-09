@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { useParams } from "react-router-dom";
-import { loadGames } from "../redux/actions/gamesActions";
-import Game from "../components/Game";
-import GameDetails from "../components/GameDetails";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { loadGames } from '../redux/actions/gamesActions';
+import Game from '../components/Game';
+import GameDetails from '../components/GameDetails';
+import styled from 'styled-components';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { popular, upcoming, newGames, isLoading: gamesLoading } = useSelector((state) => state.games, shallowEqual);
+  const { popular, upcoming, newGames, isLoading: gamesLoading } = useSelector(
+    (state) => state.games,
+    shallowEqual
+  );
   const { details } = useSelector((state) => state.game);
   const dummyGameCards = [1, 2, 3, 4];
 
@@ -22,46 +25,85 @@ const Home = () => {
 
   // Set homepage scroll bar to primary if modal not open
   useEffect(() => {
-    id ? (document.body.style.overflow = "hidden") : (document.body.style.overflow = "auto");
+    id ? (document.body.style.overflow = 'hidden') : (document.body.style.overflow = 'auto');
   }, [id]);
 
   return (
     <GameList>
-      {id && details.id && <GameDetails />}
-      <h2>Upcoming Games</h2>
-      {!gamesLoading ? (
-        <Games>{upcoming && upcoming.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
-      ) : (
-        <Games>
-          {dummyGameCards.map(() => (
-            <LinearProgress color="secondary" />
-          ))}
-        </Games>
-      )}
-      <h2>Popular Games</h2>
-      {!gamesLoading ? (
-        <Games>{popular && popular.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
-      ) : (
-        <Games>
-          {dummyGameCards.map(() => (
-            //<Game>
-            <LinearProgress color="secondary" />
-            //</Game>
-          ))}
-        </Games>
-      )}
-      <h2>New Games</h2>
-      {!gamesLoading ? (
-        <Games>{newGames && newGames.map((game) => <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />)}</Games>
-      ) : (
-        <Games>
-          {dummyGameCards.map(() => (
-            //<Game>
-            <LinearProgress color="secondary" />
-            //</Game>
-          ))}
-        </Games>
-      )}
+      <AnimateSharedLayout>
+        {/**
+         * Wrap the component you want to transition to with AnimatePresence
+         * and make sure the component has a toggle
+         */}
+        <AnimatePresence>{id && details.id && <GameDetails id={Number(id)} />}</AnimatePresence>
+        <h2>Upcoming Games</h2>
+        {!gamesLoading ? (
+          <Games>
+            {upcoming &&
+              upcoming.map((game) => (
+                <Game
+                  key={game.id}
+                  name={game.name}
+                  released={game.released}
+                  id={game.id}
+                  image={game.background_image}
+                />
+              ))}
+          </Games>
+        ) : (
+          <Games>
+            {dummyGameCards.map(() => (
+              <LinearProgress color='secondary' />
+            ))}
+          </Games>
+        )}
+        <h2>Popular Games</h2>
+        {!gamesLoading ? (
+          <Games>
+            {popular &&
+              popular.map((game) => (
+                <Game
+                  key={game.id}
+                  name={game.name}
+                  released={game.released}
+                  id={game.id}
+                  image={game.background_image}
+                />
+              ))}
+          </Games>
+        ) : (
+          <Games>
+            {dummyGameCards.map(() => (
+              //<Game>
+              <LinearProgress color='secondary' />
+              //</Game>
+            ))}
+          </Games>
+        )}
+        <h2>New Games</h2>
+        {!gamesLoading ? (
+          <Games>
+            {newGames &&
+              newGames.map((game) => (
+                <Game
+                  key={game.id}
+                  name={game.name}
+                  released={game.released}
+                  id={game.id}
+                  image={game.background_image}
+                />
+              ))}
+          </Games>
+        ) : (
+          <Games>
+            {dummyGameCards.map(() => (
+              //<Game>
+              <LinearProgress color='secondary' />
+              //</Game>
+            ))}
+          </Games>
+        )}
+      </AnimateSharedLayout>
     </GameList>
   );
 };

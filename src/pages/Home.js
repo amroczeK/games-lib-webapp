@@ -7,6 +7,7 @@ import GameDetails from '../components/GameDetails';
 import styled from 'styled-components';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { fadeIn } from '../animations';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Home = () => {
   }, [id]);
 
   return (
-    <GameList>
+    <GameList variants={fadeIn} initial='hidden' animate='show'>
       <AnimateSharedLayout>
         {/**
          * Wrap the component you want to transition to with AnimatePresence

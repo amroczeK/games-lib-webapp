@@ -1,25 +1,31 @@
-import React from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { loadGameDetails } from "../redux/actions/gameActions";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import {resizeImage} from '../utils'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import { loadGameDetails } from '../redux/actions/gameActions';
+import { resizeImage } from '../utils';
+import { popup } from '../animations';
 
 const Game = ({ name, released, id, image }) => {
   const dispatch = useDispatch();
 
-  const { isLoading: gamesLoading } = useSelector((state) => state.game, shallowEqual);
+  //const { isLoading: gamesLoading } = useSelector((state) => state.game, shallowEqual);
 
   const loadGameDetailsHandler = () => {
     // Hide the main scrollbar when we open modal
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     dispatch(loadGameDetails(id));
   };
 
   return (
-    <StyledGame layoutId={id} onClick={loadGameDetailsHandler}>
+    <StyledGame
+      variants={popup}
+      initial='hidden'
+      animate='show'
+      layoutId={id}
+      onClick={loadGameDetailsHandler}
+    >
       <Link to={`/game/${id}`}>
         <h3>{name}</h3>
         <p>{released}</p>

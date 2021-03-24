@@ -20,6 +20,7 @@ const Game = ({ name, released, id, image }) => {
 
   return (
     <StyledGame
+      data-testid='styled-game'
       variants={popup}
       initial='hidden'
       animate='show'
@@ -27,9 +28,9 @@ const Game = ({ name, released, id, image }) => {
       onClick={loadGameDetailsHandler}
     >
       <Link to={`/game/${id}`}>
-        <h3>{name}</h3>
-        <p>{released}</p>
-        <img src={resizeImage(image, 640)} alt={name} />
+        <h3 data-testid='game-name'>{name}</h3>
+        <p data-testid='game-released'>{released}</p>
+        <img data-testid='game-image' src={resizeImage(image, 640)} alt={name} />
       </Link>
     </StyledGame>
   );

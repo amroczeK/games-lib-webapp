@@ -36,9 +36,10 @@ const renderWithRedux = (
 };
 
 it('renders with redux and component has props', () => {
-  const { getByTestId } = renderWithRedux(
+  const { debug, getByTestId } = renderWithRedux(
     <Game name={'Call of Duty'} released={'2003'} id={'1234'} image={null} />
   );
+  //debug()
   expect(document.querySelector('a').getAttribute('href')).toBe('/game/1234');
   expect(getByTestId('styled-game')).toBeTruthy();
   expect(getByTestId('game-name')).toBeTruthy();
